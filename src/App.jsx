@@ -116,10 +116,14 @@ const App = () => {
                   <button
                     key={mainCat}
                     onClick={() => {
-                      setOpenedMainCategory(
-                        openedMainCategory === mainCat ? null : mainCat
-                      );
-                    }}
+                      const isClosing = openedMainCategory === mainCat;
+                    
+                      setOpenedMainCategory(isClosing ? null : mainCat);
+                    
+                      if (!isClosing && Array.isArray(menuCategories[mainCat])) {
+                        setCategory(menuCategories[mainCat][0]); // ustaw pierwszą podkategorię
+                      }
+                    }}                    
                     
                     className={`min-w-[130px] px-5 py-2.5 text-base rounded-full font-semibold border ${
                       openedMainCategory === mainCat
