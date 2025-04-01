@@ -117,7 +117,7 @@ const App = () => {
         </header>
 
         <div className="w-full">
-        <div className="md:col-span-2 grid gap-6 grid-cols-[repeat(auto-fit,minmax(220px,1fr))]">
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {filteredMenu.length === 0 ? (
               <p className="text-gray-400 italic col-span-full">
                 Brak pozycji w tej kategorii.
