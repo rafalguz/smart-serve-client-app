@@ -12,6 +12,7 @@ const App = () => {
   const [prevCategory, setPrevCategory] = useState(null);
   const [mobileView, setMobileView] = useState("main"); // "main" | "sub"
   const [activeMain, setActiveMain] = useState(null);
+  const [quantities, setQuantities] = useState({});
 
   const {
     cart,
@@ -43,6 +44,14 @@ const App = () => {
   const handleChooseTable = (num) => {
     setTable(num);
     localStorage.setItem("table", num);
+  };
+
+  const updateQuantity = (id, change) => {
+    setQuantities((prev) => {
+      const current = prev[id] || 1;
+      const newQty = Math.max(1, current + change);
+      return { ...prev, [id]: newQty };
+    });
   };
 
   const filteredMenu = MENU.filter((item) => item.category === category);
@@ -114,7 +123,7 @@ const App = () => {
                             setActiveMain(main);
                             setMobileView("sub");
                           }}
-                            className="w-full text-left font-medium text-lg py-2 px-3 rounded-lg hover:bg-red-600 hover:text-white transition"
+                          className="w-full text-left font-medium text-lg py-2 px-3 rounded-lg hover:bg-red-600 hover:text-white transition"
                         >
                           {main}
                         </button>
@@ -230,17 +239,45 @@ const App = () => {
                   <p className="text-md text-red-500 font-semibold">
                     {item.price} zł
                   </p>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      addToCart(item);
-                      setAddedItemId(item.id);
-                      setTimeout(() => setAddedItemId(null), 1000);
-                    }}
-                    className="mt-4 w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-xl font-semibold transition"
-                  >
-                    Dodaj do zamówienia
-                  </button>
+                  <div className="flex items-center gap-2 mt-4">
+                    <div className="flex items-center border border-gray-400 rounded-xl px-2">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          updateQuantity(item.id, -1);
+                        }}
+                        className="text-xl px-2 text-white hover:text-red-400"
+                      >
+                        −
+                      </button>
+                      <span className="px-2 text-white font-semibold">
+                        {quantities[item.id] || 1}
+                      </span>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          updateQuantity(item.id, 1);
+                        }}
+                        className="text-xl px-2 text-white hover:text-red-400"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const qty = quantities[item.id] || 1;
+                        for (let i = 0; i < qty; i++) {
+                          addToCart(item);
+                        }
+                        setAddedItemId(item.id);
+                        setTimeout(() => setAddedItemId(null), 1000);
+                      }}
+                      className="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-xl font-semibold transition"
+                    >
+                      Dodaj
+                    </button>
+                  </div>
                 </div>
               ))
             )}
