@@ -85,111 +85,125 @@ const App = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {filteredMenu.length === 0 ? (
-            <p className="text-gray-400 italic col-span-2">
-              Brak pozycji w tej kategorii.
-            </p>
-          ) : (
-            filteredMenu.map((item) => (
-              <div
-                key={item.id}
-                className={`border border-gray-200 rounded-2xl p-3 shadow-sm bg-white hover:shadow-md transition cursor-pointer relative ${
-                  addedItemId === item.id
-                    ? "ring-2 ring-green-400 scale-[1.02]"
-                    : ""
-                }`}
-                onClick={() => setSelected(item)}
-              >
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="w-full h-40 object-cover rounded-xl"
-                />
-                <h2 className="text-xl font-bold mt-3 text-gray-800">
-                  {item.name}
-                </h2>
-                <p className="text-md text-red-600 font-semibold">
-                  {item.price} zł
-                </p>
-              </div>
-            ))
-          )}
+    {filteredMenu.length === 0 ? (
+      <p className="text-gray-400 italic col-span-full">
+        Brak pozycji w tej kategorii.
+      </p>
+    ) : (
+      filteredMenu.map((item) => (
+        <div
+          key={item.id}
+          className={`border border-gray-600 rounded-2xl p-3 shadow-lg bg-[#121212]
+            hover:shadow-xl hover:ring-1 hover:ring-gray-500 hover:-translate-y-1 hover:scale-[1.01] transition-all duration-300 ease-in-out cursor-pointer relative ${
+              addedItemId === item.id ? "ring-2 ring-green-400 scale-[1.02]" : ""
+            }`}
+          onClick={() => setSelected(item)}
+        >
+          <img
+            src={item.image}
+            alt={item.name}
+            className="w-full h-40 object-cover rounded-xl shadow-md"
+            
+          />
+          <hr className="my-3 border-t-1 border-dashed border-red-500" />
+          <h2 className="text-xl font-bold mt-3 text-white">{item.name}</h2>
+          <p className="text-md text-red-500 font-semibold">{item.price} zł</p>
+          <button
+  className="mt-4 w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-xl font-semibold transition"
+  onClick={() => {
+    addToCart(item);
+    setAddedItemId(item.id);
+    setTimeout(() => setAddedItemId(null), 1000);
+  }}
+>
+  Dodaj do zamówienia
+</button>
+          
         </div>
+      ))
+    )}
+  </div>
 
-        <div className="bg-white border border-gray-200 p-5 rounded-2xl shadow-md flex flex-col justify-between h-fit max-h-screen overflow-auto">
-          <div>
-            <h2 className="text-2xl font-bold mb-4 text-gray-700">🧾 Twoje zamówienie</h2>
-            {cart.length === 0 ? (
-              <p className="text-gray-400 italic">Brak pozycji</p>
-            ) : (
-              <ul className="space-y-2 mb-4">
-                {cart.map((item, i) => (
-                  <li key={i} className="flex justify-between items-center text-sm">
-                    <span>
-                      {item.name} × {item.quantity} – {item.price * item.quantity} zł
-                    </span>
-                    <button
-                      onClick={() => removeFromCart(i)}
-                      className="text-red-500 text-xs hover:underline"
-                    >
-                      Usuń
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
-            {cart.length > 0 && (
-  <div className="flex justify-between items-center mt-6 gap-4">
-    <div className="font-bold text-lg text-gray-700">
-      Razem: {getTotal()} zł
+  {/* PRAWA STRONA – PANEL TWOJE ZAMÓWIENIE */}
+  <div className="w-full md:w-80 md:sticky top-6 h-fit max-h-[90vh] overflow-auto bg-white border  border-gray-600 p-5 rounded-2xl shadow-md flex flex-col justify-between">
+    <div>
+      <h2 className="text-2xl font-bold mb-4 text-gray-700">🧾 Twoje zamówienie</h2>
+      {cart.length === 0 ? (
+        <p className="text-gray-400 italic">Brak pozycji</p>
+      ) : (
+        <ul className="space-y-2 mb-4">
+          {cart.map((item, i) => (
+            <li key={i} className="flex justify-between items-center text-sm">
+              <span>
+                {item.name} × {item.quantity} – {item.price * item.quantity} zł
+              </span>
+              <button
+                onClick={() => removeFromCart(i)}
+                className="text-red-500 text-xs hover:underline"
+              >
+                Usuń
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {cart.length > 0 && (
+        <div className="flex justify-between items-center mt-6 gap-4">
+          <div className="font-bold text-lg text-gray-700">Razem: {getTotal()} zł</div>
+          <button
+            onClick={handlePlaceOrder}
+            className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-xl font-semibold transition"
+          >
+            Złóż zamówienie
+          </button>
+        </div>
+      )}
     </div>
-    <button
-      onClick={handlePlaceOrder}
-      className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-xl font-semibold transition"
+  </div>
+</div>
+
+
+{selected && (
+  <div
+    className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4"
+    onClick={() => setSelected(null)}
+  >
+    <div
+      className="bg-white p-6 rounded-2xl max-w-sm w-full relative shadow-xl animate-fade-in"
+      onClick={(e) => e.stopPropagation()}
     >
-      Złóż zamówienie
-    </button>     
+      <button
+        className="absolute top-3 right-3 text-gray-500 text-xl"
+        onClick={() => setSelected(null)}
+      >
+        ✖
+      </button>
+      <img
+        src={selected.image}
+        alt={selected.name}
+        className="w-full h-48 object-cover rounded-xl"
+      />
+      <h3 className="text-2xl font-bold mt-4 text-gray-800">
+        {selected.name}
+      </h3>
+      <p className="text-gray-600 mt-2">{selected.description}</p>
+      <p className="font-semibold text-pink-600 mt-3 text-lg">
+        {selected.price} zł
+      </p>
+      <button
+        className="mt-5 w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-xl font-semibold transition"
+        onClick={() => {
+          addToCart(selected);
+          setSelected(null);
+        }}
+      >
+        Dodaj do zamówienia
+      </button>
+    </div>
   </div>
 )}
 
-          </div>
-       
-        </div>
-      </div>
-
-      {selected && (
-        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
-          <div className="bg-white p-6 rounded-2xl max-w-sm w-full relative shadow-xl animate-fade-in">
-            <button
-              className="absolute top-3 right-3 text-gray-500 text-xl"
-              onClick={() => setSelected(null)}
-            >
-              ✖
-            </button>
-            <img
-              src={selected.image}
-              alt={selected.name}
-              className="w-full h-48 object-cover rounded-xl"
-            />
-            <h3 className="text-2xl font-bold mt-4 text-gray-800">
-              {selected.name}
-            </h3>
-            <p className="text-gray-600 mt-2">{selected.description}</p>
-            <p className="font-semibold text-pink-600 mt-3 text-lg">
-              {selected.price} zł
-            </p>
-            <button
-              className="mt-5 w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-xl font-semibold transition"
-              onClick={() => {
-                addToCart(selected);
-                setSelected(null);
-              }}
-            >
-              Dodaj do zamówienia
-            </button>
-          </div>
-        </div>
-      )}
       </div>
     </div>
   );
