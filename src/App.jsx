@@ -9,6 +9,8 @@ const App = () => {
   const [category, setCategory] = useState("Futomaki");
   const [openedMainCategory, setOpenedMainCategory] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [prevCategory, setPrevCategory] = useState(null);
+
 
   const {
     cart,
@@ -24,6 +26,20 @@ const App = () => {
     const saved = localStorage.getItem("table");
     if (saved) setTable(saved);
   }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setMenuOpen(false);
+        setOpenedMainCategory(null);
+      }
+    };
+  
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  
+  
 
   const handleChooseTable = (num) => {
     setTable(num);
@@ -78,7 +94,13 @@ const App = () => {
             <div className="px-2 py-4 text-center">
               {/* Hamburger widoczny tylko na małych ekranach */}
               <button
-                onClick={() => setMenuOpen(!menuOpen)}
+                onClick={() => {
+                  if (!menuOpen && prevCategory) {
+                    setOpenedMainCategory(prevCategory); // przywróć podkategorię
+                  }
+                  setMenuOpen(!menuOpen); // przełącz widoczność kategorii
+                }}
+                
                 className="sm:hidden bg-red-600 text-white px-4 py-2 rounded-full font-semibold shadow-md mb-4"
               >
                 🍣 Kategorie
@@ -97,8 +119,8 @@ const App = () => {
                       setOpenedMainCategory(
                         openedMainCategory === mainCat ? null : mainCat
                       );
-                      setMenuOpen(false); // zamyka menu po wyborze
                     }}
+                    
                     className={`min-w-[130px] px-5 py-2.5 text-base rounded-full font-semibold border ${
                       openedMainCategory === mainCat
                         ? "bg-red-600 text-white"
