@@ -109,12 +109,13 @@ const App = () => {
           <h2 className="text-xl font-bold mt-3 text-white">{item.name}</h2>
           <p className="text-md text-red-500 font-semibold">{item.price} zł</p>
           <button
-  className="mt-4 w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-xl font-semibold transition"
-  onClick={() => {
+  onClick={(e) => {
+    e.stopPropagation(); // teraz to działa!
     addToCart(item);
     setAddedItemId(item.id);
     setTimeout(() => setAddedItemId(null), 1000);
   }}
+  className="mt-4 w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-xl font-semibold transition"
 >
   Dodaj do zamówienia
 </button>
