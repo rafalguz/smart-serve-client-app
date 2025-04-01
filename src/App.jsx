@@ -161,7 +161,7 @@ const App = () => {
           </div>
 
           {/* PRZYCISK KOSZYKA */}
-          <div className="fixed top-4 right-4 z-50">
+          <div className="fixed top-4 right-3 z-50">
             <button
               onClick={() => setOrderOpen(true)}
               className={`bg-white text-gray-800 font-semibold p-3 rounded-full shadow-md hover:shadow-lg transition relative ${
