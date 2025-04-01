@@ -117,7 +117,7 @@ const App = () => {
         </header>
 
         <div className="w-full">
-        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {filteredMenu.length === 0 ? (
               <p className="text-gray-400 italic col-span-full">
                 Brak pozycji w tej kategorii.
@@ -128,9 +128,7 @@ const App = () => {
                   key={item.id}
                   className={`border border-gray-600 rounded-2xl p-3 shadow-lg bg-[#121212]
             hover:shadow-xl hover:ring-1 hover:ring-gray-500 hover:-translate-y-1 hover:scale-[1.01] transition-all duration-300 ease-in-out cursor-pointer relative ${
-              addedItemId === item.id
-                ? "ring-2 ring-red-400 scale-[1.02]"
-                : ""
+              addedItemId === item.id ? "ring-2 ring-red-400 scale-[1.02]" : ""
             }`}
                   onClick={() => setSelected(item)}
                 >
@@ -162,16 +160,19 @@ const App = () => {
             )}
           </div>
 
-          {/* MINI KAFELEK TWOJE ZAMÓWIENIE */}
+          {/* PRZYCISK KOSZYKA */}
           <div className="fixed top-4 right-4 z-50">
             <button
               onClick={() => setOrderOpen(true)}
-              className={`bg-white text-gray-800 font-semibold py-2 px-4 rounded-xl shadow-md hover:shadow-lg transition flex items-center gap-2 ${
+              className={`bg-white text-gray-800 font-semibold p-3 rounded-full shadow-md hover:shadow-lg transition relative ${
                 addedItemId ? "animate-bounce" : ""
               }`}
+              title="Twoje zamówienie"
             >
-              🛒 TWOJE ZAMÓWIENIE:  {cart.reduce((acc, item) => acc + item.quantity, 0)} |{" "}
-              {getTotal()} zł
+              🛒
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                {cart.reduce((acc, item) => acc + item.quantity, 0)}
+              </span>
             </button>
           </div>
 
