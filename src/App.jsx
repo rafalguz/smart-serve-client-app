@@ -10,7 +10,8 @@ const App = () => {
   const [openedMainCategory, setOpenedMainCategory] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [prevCategory, setPrevCategory] = useState(null);
-
+  const [mobileView, setMobileView] = useState("main"); // "main" | "sub"
+  const [activeMain, setActiveMain] = useState(null);
 
   const {
     cart,
@@ -34,12 +35,10 @@ const App = () => {
         setOpenedMainCategory(null);
       }
     };
-  
+
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  
-  
 
   const handleChooseTable = (num) => {
     setTable(num);
@@ -92,39 +91,83 @@ const App = () => {
           <div className="w-full max-w-5xl mx-auto">
             {/* HAMBURGER + KATEGORIE */}
             <div className="px-2 py-4 text-center">
-              {/* Hamburger widoczny tylko na małych ekranach */}
+              {/* Przycisk rozwijania tylko na małych ekranach */}
               <button
                 onClick={() => {
-                  if (!menuOpen && prevCategory) {
-                    setOpenedMainCategory(prevCategory); // przywróć podkategorię
-                  }
-                  setMenuOpen(!menuOpen); // przełącz widoczność kategorii
+                  setMenuOpen(!menuOpen);
+                  setMobileView("main");
+                  setActiveMain(null);
                 }}
-                
                 className="sm:hidden bg-red-600 text-white px-4 py-2 rounded-full font-semibold shadow-md mb-4"
               >
                 🍣 Kategorie
               </button>
 
-              {/* Kategorie - widoczne na dużych ekranach lub po kliknięciu hamburgera */}
-              <div
-                className={`${
-                  menuOpen ? "block" : "hidden"
-                } sm:flex flex-wrap justify-center gap-3`}
-              >
+              {/* Menu mobilne */}
+              {menuOpen && (
+                <div className="sm:hidden bg-gray-900 text-white rounded-xl p-4 shadow-lg space-y-2 max-h-[65vh] overflow-y-auto border border-red-600">
+                  {mobileView === "main" &&
+                    Object.entries(menuCategories).map(([main, subs]) => (
+                      <div key={main}>
+                        <button
+                          onClick={() => {
+                            setActiveMain(main);
+                            setMobileView("sub");
+                          }}
+                            className="w-full text-left font-medium text-lg py-2 px-3 rounded-lg hover:bg-red-600 hover:text-white transition"
+                        >
+                          {main}
+                        </button>
+                      </div>
+                    ))}
+
+                  {mobileView === "sub" && activeMain && (
+                    <div>
+                      <button
+                        onClick={() => {
+                          setMobileView("main");
+                          setActiveMain(null);
+                        }}
+                        className="text-sm text-gray-500 mb-2"
+                      >
+                        ← Wróć
+                      </button>
+                      {menuCategories[activeMain].map((sub) => (
+                        <button
+                          key={sub}
+                          onClick={() => {
+                            setCategory(sub);
+                            setMenuOpen(false);
+                          }}
+                          className={`block w-full text-left rounded-md px-3 py-2 font-medium text-sm ${
+                            category === sub
+                              ? "bg-red-500 text-white"
+                              : "text-gray-800 hover:bg-gray-200"
+                          }`}
+                        >
+                          {sub}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Widok kategorii na dużych ekranach */}
+              <div className="hidden sm:flex flex-wrap justify-center gap-3">
                 {Object.keys(menuCategories).map((mainCat) => (
                   <button
                     key={mainCat}
                     onClick={() => {
                       const isClosing = openedMainCategory === mainCat;
-                    
                       setOpenedMainCategory(isClosing ? null : mainCat);
-                    
-                      if (!isClosing && Array.isArray(menuCategories[mainCat])) {
-                        setCategory(menuCategories[mainCat][0]); // ustaw pierwszą podkategorię
+                      if (
+                        !isClosing &&
+                        Array.isArray(menuCategories[mainCat])
+                      ) {
+                        setCategory(menuCategories[mainCat][0]);
                       }
-                    }}                    
-                    
+                    }}
                     className={`min-w-[130px] px-5 py-2.5 text-base rounded-full font-semibold border ${
                       openedMainCategory === mainCat
                         ? "bg-red-600 text-white"
