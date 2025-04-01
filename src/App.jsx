@@ -7,8 +7,8 @@ const App = () => {
   const [table, setTable] = useState(null);
   const [selected, setSelected] = useState(null);
   const [category, setCategory] = useState("Futomaki");
-
   const [openedMainCategory, setOpenedMainCategory] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const {
     cart,
@@ -74,24 +74,41 @@ const App = () => {
 
           {/* Belka nawigacyjna z kategoriami i podkategoriami */}
           <div className="w-full max-w-5xl mx-auto">
-            <div className="flex flex-wrap justify-center gap-3 px-2 py-4">
-              {Object.keys(menuCategories).map((mainCat) => (
-                <button
-                  key={mainCat}
-                  onClick={() =>
-                    setOpenedMainCategory(
-                      openedMainCategory === mainCat ? null : mainCat
-                    )
-                  }
-                  className={`min-w-[130px] px-5 py-2.5 text-base rounded-full font-semibold border ${
-                    openedMainCategory === mainCat
-                      ? "bg-red-600 text-white"
-                      : "bg-white text-gray-800 border-gray-300"
-                  } hover:shadow transition`}
-                >
-                  {mainCat}
-                </button>
-              ))}
+            {/* HAMBURGER + KATEGORIE */}
+            <div className="px-2 py-4 text-center">
+              {/* Hamburger widoczny tylko na małych ekranach */}
+              <button
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="sm:hidden bg-red-600 text-white px-4 py-2 rounded-full font-semibold shadow-md mb-4"
+              >
+                🍣 Kategorie
+              </button>
+
+              {/* Kategorie - widoczne na dużych ekranach lub po kliknięciu hamburgera */}
+              <div
+                className={`${
+                  menuOpen ? "block" : "hidden"
+                } sm:flex flex-wrap justify-center gap-3`}
+              >
+                {Object.keys(menuCategories).map((mainCat) => (
+                  <button
+                    key={mainCat}
+                    onClick={() => {
+                      setOpenedMainCategory(
+                        openedMainCategory === mainCat ? null : mainCat
+                      );
+                      setMenuOpen(false); // zamyka menu po wyborze
+                    }}
+                    className={`min-w-[130px] px-5 py-2.5 text-base rounded-full font-semibold border ${
+                      openedMainCategory === mainCat
+                        ? "bg-red-600 text-white"
+                        : "bg-white text-gray-800 border-gray-300"
+                    } hover:shadow transition`}
+                  >
+                    {mainCat}
+                  </button>
+                ))}
+              </div>
             </div>
 
             {/* Podkategorie w pełnej szerokości */}
