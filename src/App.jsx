@@ -3,6 +3,7 @@ import { MENU, menuCategories } from "./menu";
 import { useCart } from "./order";
 
 const App = () => {
+  const [orderOpen, setOrderOpen] = useState(false);
   const [table, setTable] = useState(null);
   const [selected, setSelected] = useState(null);
   const [category, setCategory] = useState("Futomaki");
@@ -60,6 +61,7 @@ const App = () => {
             ✅ Zamówienie zostało złożone!
           </div>
         )}
+
         <header className="text-center mb-6 w-full mx-auto">
           <img
             src="/images/logo.png"
@@ -114,8 +116,8 @@ const App = () => {
           </div>
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="w-full">
+        <div className="md:col-span-2 grid gap-6 grid-cols-[repeat(auto-fit,minmax(220px,1fr))]">
             {filteredMenu.length === 0 ? (
               <p className="text-gray-400 italic col-span-full">
                 Brak pozycji w tej kategorii.
@@ -127,7 +129,7 @@ const App = () => {
                   className={`border border-gray-600 rounded-2xl p-3 shadow-lg bg-[#121212]
             hover:shadow-xl hover:ring-1 hover:ring-gray-500 hover:-translate-y-1 hover:scale-[1.01] transition-all duration-300 ease-in-out cursor-pointer relative ${
               addedItemId === item.id
-                ? "ring-2 ring-green-400 scale-[1.02]"
+                ? "ring-2 ring-red-400 scale-[1.02]"
                 : ""
             }`}
                   onClick={() => setSelected(item)}
@@ -146,7 +148,7 @@ const App = () => {
                   </p>
                   <button
                     onClick={(e) => {
-                      e.stopPropagation(); // teraz to działa!
+                      e.stopPropagation();
                       addToCart(item);
                       setAddedItemId(item.id);
                       setTimeout(() => setAddedItemId(null), 1000);
@@ -160,51 +162,69 @@ const App = () => {
             )}
           </div>
 
-          {/* PRAWA STRONA – PANEL TWOJE ZAMÓWIENIE */}
-          <div className="w-full md:w-80 md:sticky top-6 h-fit max-h-[90vh] overflow-auto bg-white border  border-gray-600 p-5 rounded-2xl shadow-md flex flex-col justify-between">
-            <div>
-              <h2 className="text-2xl font-bold mb-4 text-gray-700">
-                🧾 Twoje zamówienie
-              </h2>
-              {cart.length === 0 ? (
-                <p className="text-gray-400 italic">Brak pozycji</p>
-              ) : (
-                <ul className="space-y-2 mb-4">
-                  {cart.map((item, i) => (
-                    <li
-                      key={i}
-                      className="flex justify-between items-center text-sm"
-                    >
-                      <span>
-                        {item.name} × {item.quantity} –{" "}
-                        {item.price * item.quantity} zł
-                      </span>
-                      <button
-                        onClick={() => removeFromCart(i)}
-                        className="text-red-500 text-xs hover:underline"
-                      >
-                        Usuń
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              )}
-
-              {cart.length > 0 && (
-                <div className="flex justify-between items-center mt-6 gap-4">
-                  <div className="font-bold text-lg text-gray-700">
-                    Razem: {getTotal()} zł
-                  </div>
-                  <button
-                    onClick={handlePlaceOrder}
-                    className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-xl font-semibold transition"
-                  >
-                    Złóż zamówienie
-                  </button>
-                </div>
-              )}
-            </div>
+          {/* MINI KAFELEK TWOJE ZAMÓWIENIE */}
+          <div className="fixed top-4 right-4 z-50">
+            <button
+              onClick={() => setOrderOpen(true)}
+              className={`bg-white text-gray-800 font-semibold py-2 px-4 rounded-xl shadow-md hover:shadow-lg transition flex items-center gap-2 ${
+                addedItemId ? "animate-bounce" : ""
+              }`}
+            >
+              🛒 TWOJE ZAMÓWIENIE:  {cart.reduce((acc, item) => acc + item.quantity, 0)} |{" "}
+              {getTotal()} zł
+            </button>
           </div>
+
+          {orderOpen && (
+            <div
+              className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4"
+              onClick={() => setOrderOpen(false)}
+            >
+              <div
+                className="bg-white p-6 rounded-2xl w-full max-w-md shadow-xl relative"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  onClick={() => setOrderOpen(false)}
+                  className="absolute top-3 right-4 text-xl text-gray-500 hover:text-red-500"
+                >
+                  ✖
+                </button>
+                <h2 className="text-2xl font-bold mb-4 text-gray-800">
+                  🧾 Twoje zamówienie
+                </h2>
+
+                {cart.length === 0 ? (
+                  <p className="text-gray-400 italic">Brak pozycji</p>
+                ) : (
+                  <ul className="space-y-2 mb-4">
+                    {cart.map((item, i) => (
+                      <li key={i} className="flex justify-between text-sm">
+                        <span>
+                          {item.name} × {item.quantity}
+                        </span>
+                        <span>{item.price * item.quantity} zł</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {cart.length > 0 && (
+                  <div className="mt-4 flex justify-between items-center">
+                    <strong className="text-lg text-gray-800">
+                      Razem: {getTotal()} zł
+                    </strong>
+                    <button
+                      onClick={handlePlaceOrder}
+                      className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl font-semibold"
+                    >
+                      Złóż zamówienie
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </div>
 
         {selected && (

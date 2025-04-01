@@ -42,6 +42,7 @@ export function useCart() {
     setOrderSuccess(true);
     setCart([]);
     setTimeout(() => setOrderSuccess(false), 3000);
+    setOrderOpen(false);
   };
 
   return {
