@@ -209,15 +209,11 @@ export const MENU = [
   }
 ];
 
-export const CATEGORIES = [
-  "Futomaki",
-  "Hosomaki",
-  "Nigiri",
-  "Sashimi",
-  "Sashimi Roll",
-  "Specjały Szajnochy",
-  "Sushi Wege",
-  "Tatary",
-  "Uramaki",
-  "Zestawy"
-];
+export const menuCategories =  {
+  "Sushi": ["Futomaki", "Hosomaki", "Nigiri", "Sashimi", "Sushi Wege"],
+  "Zupy": [],
+  "Zestawy": [],
+  "Sushi Wege": [],
+  "Specjały Szajnochy": [],
+  "Napoje": []
+};
