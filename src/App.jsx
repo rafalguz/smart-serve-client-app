@@ -7,10 +7,12 @@ import OrderModal from "./components/OrderModal";
 import ItemModal from "./components/ItemModal";
 import PaymentModal from "./components/PaymentModal";
 import LanguageSwitcher from "./components/LanguageSwitcher";
+import TableChangeModal from "./components/TableChangeModal";
 
 const App = () => {
   const [orderOpen, setOrderOpen] = useState(false);
   const [table, setTable] = useState(null);
+  const [showTableChange, setShowTableChange] = useState(false);
   const [selected, setSelected] = useState(null);
   const [category, setCategory] = useState("Futomaki");
   const [openedMainCategory, setOpenedMainCategory] = useState(null);
@@ -25,6 +27,7 @@ const App = () => {
   const {
     cart,
     orderSuccess,
+    setOrderSuccess,
     addToCart,
     removeFromCart,
     getTotal,
@@ -36,6 +39,16 @@ const App = () => {
     const saved = localStorage.getItem("table");
     if (saved) setTable(saved);
   }, []);
+
+  useEffect(() => {
+    if (orderSuccess) {
+      const timeout = setTimeout(() => {
+        setOrderSuccess(false);
+      }, 2000); // 2 sekundy
+
+      return () => clearTimeout(timeout);
+    }
+  }, [orderSuccess]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -87,6 +100,17 @@ const App = () => {
     }
   };
 
+  const handleSelectCategory = (mainCat, subCat = null) => {
+    if (subCat) {
+      setCategory(subCat);
+      setOpenedMainCategory(mainCat);
+    } else {
+      setCategory(mainCat);
+      setOpenedMainCategory(null);
+    }
+    setMenuOpen(false);
+  };
+  
   const filteredMenu = MENU.filter((item) => item.category === category);
 
   if (!table) {
@@ -113,19 +137,13 @@ const App = () => {
   return (
     <div className="min-h-screen w-full font-sans bg-[#121212] flex justify-center px-4 py-6">
       <div className="w-full max-w-6xl mx-auto">
-        {orderSuccess && (
-          <div className="fixed top-5 right-5 bg-green-600 text-white px-4 py-2 rounded-xl shadow-lg animate-bounce z-50">
-            ✅ Zamówienie zostało złożone!
-          </div>
-        )}
-
         <div className="fixed top-4 left-4 z-50">
           <LanguageSwitcher />
         </div>
 
         <MenuHeader
           category={category}
-          setCategory={setCategory}
+          handleSelectCategory={handleSelectCategory}
           openedMainCategory={openedMainCategory}
           setOpenedMainCategory={setOpenedMainCategory}
           menuOpen={menuOpen}
@@ -137,6 +155,7 @@ const App = () => {
         />
 
         <MenuGrid
+          key={category} 
           filteredMenu={filteredMenu}
           quantities={quantities}
           updateQuantity={updateQuantity}
@@ -174,28 +193,19 @@ const App = () => {
         />
 
         {cart.length > 0 && !orderOpen && (
-          <div className="fixed top-4 right-1 z-50 flex gap-3 items-center">
-            {/* Kelner */}
-            <button
-              onClick={() => alert("Kelner został wezwany!")}
-              className={`absolute top-0 right-0 bg-white text-gray-800 p-3 rounded-full shadow-md hover:shadow-lg transition-transform duration-300 ${
-                scrolledDown ? "translate-y-20" : "translate-x-[-64px]"
-              }`}
-              title="Wezwij kelnera"
-            >
-              <img
-                src="/images/wezwijkelnera.jpg"
-                alt="Wezwij kelnera"
-                className="w-8 h-8 object-contain"
-              />
-            </button>
-
+          <div
+            className={`fixed z-50 transition-all duration-500 ${
+              scrolledDown
+                ? "top-24 right-2 flex flex-col items-end space-y-3"
+                : "top-3 right-5 flex gap-3 items-center"
+            }`}
+          >
             {/* Koszyk */}
             <button
               onClick={() => setOrderOpen(true)}
-              className={`bg-white text-gray-800 p-3 rounded-full shadow-md hover:shadow-lg transition relative ${
-                addedItemId ? "animate-bounce" : ""
-              }`}
+              className={`bg-white text-gray-800 rounded-full shadow-md hover:shadow-lg transition-all duration-300 relative flex items-center justify-center ${
+                scrolledDown ? "w-12 h-12" : "w-16 h-16"
+              } ${addedItemId ? "animate-bounce" : ""}`}
               title="Twoje zamówienie"
             >
               <img
@@ -209,6 +219,51 @@ const App = () => {
                 </span>
               )}
             </button>
+
+            {/* Wezwij kelnera */}
+            <button
+              onClick={() => alert("Kelner został wezwany!")}
+              className={`bg-white text-gray-800 rounded-full shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center ${
+                scrolledDown ? "w-12 h-12" : "w-16 h-16"
+              }`}
+              title="Wezwij kelnera"
+            >
+              <img
+                src="/images/wezwijkelnera.jpg"
+                alt="Wezwij kelnera"
+                className="w-8 h-8 object-contain"
+              />
+            </button>
+
+            {/* Numer stolika */}
+            {table && (
+              <button
+                onClick={() => setShowTableChange(true)}
+                className={`bg-white text-gray-800 text-xl font-extrabold rounded-full shadow-md hover:bg-gray-300 transition-all duration-300 flex items-center justify-center ${
+                  scrolledDown ? "w-12 h-12 text-lg" : "w-16 h-16 text-xl"
+                }`}
+                title="Numer stolika"
+              >
+                {table}
+              </button>
+            )}
+
+            {/* Modal do zmiany stolika */}
+            {showTableChange && (
+              <TableChangeModal
+                onClose={() => setShowTableChange(false)}
+                onSuccess={() => {
+                  setShowTableChange(false);
+                  localStorage.removeItem("table");
+                  setTable(null);
+                }}
+              />
+            )}
+            {orderSuccess && (
+              <div className="absolute top-full mt-2 right-0 bg-green-600 text-white px-5 py-2 rounded-xl shadow-xl z-[9999] whitespace-nowrap">
+                ✅ Zamówienie zostało złożone!
+              </div>
+            )}
           </div>
         )}
       </div>

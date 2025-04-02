@@ -3,7 +3,7 @@ import { useTranslate } from "../context/LanguageContext";
 
 const MenuHeader = ({
   category,
-  setCategory,
+  handleSelectCategory,
   openedMainCategory,
   setOpenedMainCategory,
   menuOpen,
@@ -22,7 +22,7 @@ const MenuHeader = ({
         className="mx-auto mb-2 w-48 md:w-56 lg:w-64 h-auto"
       />
       <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-red-600 tracking-tight mb-2">
-      {t("menu")}
+        {t("menu")}
       </h1>
 
       <div className="w-full max-w-5xl mx-auto">
@@ -38,6 +38,7 @@ const MenuHeader = ({
             🍣 {t("categories")}
           </button>
 
+          {/* Menu mobilne */}
           {menuOpen && (
             <div className="sm:hidden bg-[#1e1e1e] text-white rounded-2xl p-4 shadow-2xl space-y-3 max-h-[70vh] overflow-y-auto border border-red-500">
               {mobileView === "main" &&
@@ -45,9 +46,20 @@ const MenuHeader = ({
                   <div key={main}>
                     <button
                       onClick={() => {
-                        setActiveMain(main);
-                        setCategory(subs[0]); // 👈 automatycznie ustawia pierwszą podkategorię
-                        setMobileView("sub");
+                        const isClosing = openedMainCategory === main;
+                        if (isClosing) {
+                          setOpenedMainCategory(null);
+                        } else {
+                          const subs = menuCategories[main];
+                          if (Array.isArray(subs)) {
+                            handleSelectCategory(main, subs[0]);
+                            setOpenedMainCategory(main); // ← TO BYŁO POMINIĘTE!
+                            setMobileView("sub");
+                            setActiveMain(main);
+                          } else {
+                            handleSelectCategory(main);
+                          }
+                        }
                       }}
                       className="w-full text-left font-bold text-lg py-3 px-4 rounded-xl bg-[#2a2a2a] hover:bg-red-600 hover:text-white transition shadow-md"
                     >
@@ -57,28 +69,28 @@ const MenuHeader = ({
                 ))}
 
               {mobileView === "sub" && activeMain && (
-                <div>
+                <div className="space-y-2 flex flex-col items-center">
                   <button
                     onClick={() => {
                       setMobileView("main");
                       setActiveMain(null);
                     }}
-                    className="text-sm text-gray-400 mb-3 hover:text-red-400 transition"
+                    className="block w-full text-center text-white text-sm mb-2 hover:text-red-400"
                   >
-                    ← {t("back")}
+                    ← Wróć
                   </button>
                   {menuCategories[activeMain].map((sub) => (
                     <button
                       key={sub}
                       onClick={() => {
-                        setCategory(sub);
+                        handleSelectCategory(activeMain, sub);
                         setMenuOpen(false);
                       }}
-                      className={`block w-full text-left rounded-xl px-4 py-3 font-semibold text-sm transition shadow-md ${
+                      className={`min-w-[130px] px-5 py-2.5 text-base rounded-full font-semibold border w-full text-center ${
                         category === sub
-                          ? "bg-red-600 text-white"
-                          : "bg-[#2a2a2a] text-white hover:bg-red-700"
-                      }`}
+                          ? "bg-red-600 text-white border-red-600"
+                          : "bg-white text-gray-800 border-gray-300"
+                      } hover:shadow transition`}
                     >
                       {sub}
                     </button>
@@ -94,13 +106,20 @@ const MenuHeader = ({
                 key={mainCat}
                 onClick={() => {
                   const isClosing = openedMainCategory === mainCat;
-                  setOpenedMainCategory(isClosing ? null : mainCat);
-                  if (!isClosing && Array.isArray(menuCategories[mainCat])) {
-                    setCategory(menuCategories[mainCat][0]);
+                  if (isClosing) {
+                    setOpenedMainCategory(null);
+                  } else {
+                    const subs = menuCategories[mainCat];
+                    if (Array.isArray(subs)) {
+                      handleSelectCategory(mainCat, subs[0]);
+                    } else {
+                      handleSelectCategory(mainCat);
+                    }
                   }
                 }}
                 className={`min-w-[130px] px-5 py-2.5 text-base rounded-full font-semibold border ${
-                  openedMainCategory === mainCat
+                  category === mainCat ||
+                  menuCategories[mainCat]?.includes(category)
                     ? "bg-red-600 text-white"
                     : "bg-white text-gray-800 border-gray-300"
                 } hover:shadow transition`}
@@ -112,12 +131,14 @@ const MenuHeader = ({
         </div>
 
         {openedMainCategory && (
-          <div className="w-full px-2 mt-4 flex flex-wrap justify-center gap-3 pb-2">
+          <div className="hidden sm:flex w-full px-2 mt-4 flex-wrap justify-center gap-3 pb-2">
             {Array.isArray(menuCategories[openedMainCategory]) &&
               menuCategories[openedMainCategory].map((subCat) => (
                 <button
                   key={subCat}
-                  onClick={() => setCategory(subCat)}
+                  onClick={() =>
+                    handleSelectCategory(openedMainCategory, subCat)
+                  }
                   className={`min-w-[130px] px-5 py-2.5 text-base  rounded-full transition ${
                     category === subCat
                       ? "bg-red-500 text-white"

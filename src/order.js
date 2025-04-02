@@ -42,9 +42,10 @@ export function useCart() {
     cart,
     addedItemId,
     orderSuccess,
+    setOrderSuccess,
     addToCart,
     removeFromCart,
     decreaseQuantity,
-    getTotal
+    getTotal,
   };
 }

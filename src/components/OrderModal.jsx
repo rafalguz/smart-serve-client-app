@@ -26,7 +26,7 @@ const OrderModal = ({
           onClick={() => setOrderOpen(false)}
           className="absolute top-4 right-5 text-2xl text-gray-400 hover:text-red-500"
         >
-          ✖
+          X
         </button>
 
         <h2 className="text-3xl font-bold mb-6 text-center text-white">
