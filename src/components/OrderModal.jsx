@@ -1,4 +1,3 @@
-
 import { useTranslate } from "../context/LanguageContext";
 
 const OrderModal = ({
@@ -36,48 +35,50 @@ const OrderModal = ({
         {cart.length === 0 ? (
           <p className="text-gray-400 italic text-center">{t("noItems")}</p>
         ) : (
-          <ul className="space-y-4 mb-6 text-lg">
-            {cart.map((item, i) => (
-              <li
-                key={i}
-                className="flex justify-between items-center bg-[#2a2a2a] rounded-xl p-4 shadow-inner"
-              >
-                <div>
-                  <p className="font-semibold text-white">{item.name}</p>
-                  <p className="text-sm text-gray-400">
-                    {item.price} zł / szt. × {item.quantity} ={" "}
-                    {item.price * item.quantity} zł
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => removeFromCart(item.id)}
-                    className="text-red-500 hover:text-red-700 text-lg font-bold px-2"
-                    title={t("delete")}
-                  >
-                    🗑
-                  </button>
-                  <div className="flex items-center border border-gray-500 rounded-xl">
-                    <button
-                      onClick={() => handleCartQuantityChange(item, -1)}
-                      className="px-3 text-xl text-white hover:text-red-400"
-                    >
-                      −
-                    </button>
-                    <span className="px-3 font-semibold text-white text-lg">
-                      {item.quantity}
-                    </span>
-                    <button
-                      onClick={() => handleCartQuantityChange(item, 1)}
-                      className="px-3 text-xl text-white hover:text-red-400"
-                    >
-                      +
-                    </button>
+          <div className="max-h-[50vh] overflow-y-auto pr-2">
+            <ul className="space-y-4 mb-6 text-lg">
+              {cart.map((item, i) => (
+                <li
+                  key={i}
+                  className="flex justify-between items-center bg-[#2a2a2a] rounded-xl p-4 shadow-inner"
+                >
+                  <div>
+                    <p className="font-semibold text-white">{item.name}</p>
+                    <p className="text-sm text-gray-400">
+                      {item.price} zł / szt. × {item.quantity} ={" "}
+                      {item.price * item.quantity} zł
+                    </p>
                   </div>
-                </div>
-              </li>
-            ))}
-          </ul>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => removeFromCart(item.id)}
+                      className="text-red-500 hover:text-red-700 text-lg font-bold px-2"
+                      title={t("delete")}
+                    >
+                      🗑
+                    </button>
+                    <div className="flex items-center border border-gray-500 rounded-xl">
+                      <button
+                        onClick={() => handleCartQuantityChange(item, -1)}
+                        className="px-3 text-xl text-white hover:text-red-400"
+                      >
+                        −
+                      </button>
+                      <span className="px-3 font-semibold text-white text-lg">
+                        {item.quantity}
+                      </span>
+                      <button
+                        onClick={() => handleCartQuantityChange(item, 1)}
+                        className="px-3 text-xl text-white hover:text-red-400"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
 
         {cart.length > 0 && (
