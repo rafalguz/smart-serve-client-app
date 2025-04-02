@@ -30,11 +30,11 @@ const OrderModal = ({
         </button>
 
         <h2 className="text-3xl font-bold mb-6 text-center text-white">
-          🧾 Twoje zamówienie
+          🧾 {t("yourOrder")}
         </h2>
 
         {cart.length === 0 ? (
-          <p className="text-gray-400 italic text-center">Brak pozycji</p>
+          <p className="text-gray-400 italic text-center">{t("noItems")}</p>
         ) : (
           <ul className="space-y-4 mb-6 text-lg">
             {cart.map((item, i) => (
@@ -53,7 +53,7 @@ const OrderModal = ({
                   <button
                     onClick={() => removeFromCart(item.id)}
                     className="text-red-500 hover:text-red-700 text-lg font-bold px-2"
-                    title="Usuń pozycję"
+                    title={t("delete")}
                   >
                     🗑
                   </button>
@@ -83,13 +83,13 @@ const OrderModal = ({
         {cart.length > 0 && (
           <div className="mt-6 flex justify-between items-center">
             <strong className="text-2xl text-white">
-              Razem: {getTotal()} zł
+              {t("total")}: {getTotal()} zł
             </strong>
             <button
               onClick={startPayment}
               className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-bold text-lg"
             >
-              Złóż zamówienie
+              {t("placeOrder")}
             </button>
           </div>
         )}

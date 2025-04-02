@@ -1,5 +1,6 @@
 const en = {
     chooseTable: "Choose your table",
+    choosePaymentMethod: "Choose payment method",
     yourOrder: "Your order",
     placeOrder: "Place order",
     total: "Total",
@@ -9,7 +10,10 @@ const en = {
     noItems: "No items",
     menu: "Menu",
     categories: "Categories",
-    back: "Back"
+    back: "Back",
+    add: "Add",
+    delete: "Usuń",
+    total: "Total"
   };
   
   export default en;

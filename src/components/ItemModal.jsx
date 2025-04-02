@@ -71,7 +71,7 @@ const ItemModal = ({
               onClick={handleAdd}
               className="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-xl font-semibold transition"
             >
-              Dodaj
+              {t("add")}
             </button>
           </div>
         </div>

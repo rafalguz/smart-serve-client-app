@@ -16,7 +16,7 @@ const MenuGrid = ({
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {filteredMenu.length === 0 ? (
             <p className="text-gray-400 italic col-span-full">
-              Brak pozycji w tej kategorii.
+              {t("noItems")}
             </p>
           ) : (
             filteredMenu.map((item) => (
@@ -73,7 +73,7 @@ const MenuGrid = ({
                     }}
                     className="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-xl font-semibold transition"
                   >
-                    Dodaj
+                    {t("add")}
                   </button>
                 </div>
               </div>

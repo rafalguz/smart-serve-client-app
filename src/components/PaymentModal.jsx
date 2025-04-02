@@ -19,7 +19,7 @@ const PaymentModal = ({ onClose, onSelect }) => {
           </button>
   
           <h2 className="text-3xl font-bold mb-6 text-center text-white">
-            Wybierz metodę płatności
+            {t("choosePaymentMethod")}
           </h2>
   
           <div className="space-y-4">
@@ -27,19 +27,19 @@ const PaymentModal = ({ onClose, onSelect }) => {
               onClick={() => onSelect("karta")}
               className="w-full bg-[#2a2a2a] hover:bg-red-600 text-white font-bold py-4 px-6 rounded-2xl text-xl flex items-center justify-center gap-3 shadow-md transition"
             >
-              💳 Płatność kartą
+              💳 {t("payWithCard")}
             </button>
             <button
               onClick={() => onSelect("blik")}
               className="w-full bg-[#2a2a2a] hover:bg-red-600 text-white font-bold py-4 px-6 rounded-2xl text-xl flex items-center justify-center gap-3 shadow-md transition"
             >
-              📲 BLIK
+              📲 {t("payWithBlik")}
             </button>
             <button
               onClick={() => onSelect("kelner")}
               className="w-full bg-[#2a2a2a] hover:bg-red-600 text-white font-bold py-4 px-6 rounded-2xl text-xl flex items-center justify-center gap-3 shadow-md transition"
             >
-              🧾 Zapłać u kelnera
+              🧾 {t("payWithWaiter")}
             </button>
           </div>
         </div>
