@@ -37,7 +37,7 @@ const MenuHeader = ({
           </button>
 
           {menuOpen && (
-            <div className="sm:hidden bg-gray-900 text-white rounded-xl p-4 shadow-lg space-y-2 max-h-[65vh] overflow-y-auto border border-red-600">
+            <div className="sm:hidden bg-[#1e1e1e] text-white rounded-2xl p-4 shadow-2xl space-y-3 max-h-[70vh] overflow-y-auto border border-red-500">
               {mobileView === "main" &&
                 Object.entries(menuCategories).map(([main, subs]) => (
                   <div key={main}>
@@ -46,7 +46,7 @@ const MenuHeader = ({
                         setActiveMain(main);
                         setMobileView("sub");
                       }}
-                      className="w-full text-left font-medium text-lg py-2 px-3 rounded-lg hover:bg-red-600 hover:text-white transition"
+                      className="w-full text-left font-bold text-lg py-3 px-4 rounded-xl bg-[#2a2a2a] hover:bg-red-600 hover:text-white transition shadow-md"
                     >
                       {main}
                     </button>
@@ -60,7 +60,7 @@ const MenuHeader = ({
                       setMobileView("main");
                       setActiveMain(null);
                     }}
-                    className="text-sm text-gray-500 mb-2"
+                    className="text-sm text-gray-400 mb-3 hover:text-red-400 transition"
                   >
                     ← Wróć
                   </button>
@@ -71,10 +71,10 @@ const MenuHeader = ({
                         setCategory(sub);
                         setMenuOpen(false);
                       }}
-                      className={`block w-full text-left rounded-md px-3 py-2 font-medium text-sm ${
+                      className={`block w-full text-left rounded-xl px-4 py-3 font-semibold text-sm transition shadow-md ${
                         category === sub
-                          ? "bg-red-500 text-white"
-                          : "text-gray-800 hover:bg-gray-200"
+                          ? "bg-red-600 text-white"
+                          : "bg-[#2a2a2a] text-white hover:bg-red-700"
                       }`}
                     >
                       {sub}
