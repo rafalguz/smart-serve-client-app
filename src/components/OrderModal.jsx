@@ -5,7 +5,7 @@ const OrderModal = ({
   removeFromCart,
   handleCartQuantityChange,
   getTotal,
-  startPayment, // 👈 dodano zamiast handlePlaceOrder
+  startPayment,
 }) => {
   if (!orderOpen) return null;
 
@@ -15,16 +15,17 @@ const OrderModal = ({
       onClick={() => setOrderOpen(false)}
     >
       <div
-        className="bg-white p-8 rounded-2xl w-full max-w-xl shadow-2xl relative"
+        className="bg-[#1e1e1e] text-white p-8 rounded-2xl w-full max-w-xl shadow-2xl relative border border-gray-600"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={() => setOrderOpen(false)}
-          className="absolute top-4 right-5 text-2xl text-gray-500 hover:text-red-500"
+          className="absolute top-4 right-5 text-2xl text-gray-400 hover:text-red-500"
         >
           ✖
         </button>
-        <h2 className="text-3xl font-bold mb-6 text-gray-800 text-center">
+
+        <h2 className="text-3xl font-bold mb-6 text-center text-white">
           🧾 Twoje zamówienie
         </h2>
 
@@ -35,11 +36,11 @@ const OrderModal = ({
             {cart.map((item, i) => (
               <li
                 key={i}
-                className="flex justify-between items-center bg-gray-100 rounded-xl p-4"
+                className="flex justify-between items-center bg-[#2a2a2a] rounded-xl p-4 shadow-inner"
               >
                 <div>
-                  <p className="font-semibold text-gray-800">{item.name}</p>
-                  <p className="text-sm text-gray-600">
+                  <p className="font-semibold text-white">{item.name}</p>
+                  <p className="text-sm text-gray-400">
                     {item.price} zł / szt. × {item.quantity} ={" "}
                     {item.price * item.quantity} zł
                   </p>
@@ -52,19 +53,19 @@ const OrderModal = ({
                   >
                     🗑
                   </button>
-                  <div className="flex items-center border border-gray-400 rounded-xl">
+                  <div className="flex items-center border border-gray-500 rounded-xl">
                     <button
                       onClick={() => handleCartQuantityChange(item, -1)}
-                      className="px-3 text-xl text-gray-800 hover:text-red-600"
+                      className="px-3 text-xl text-white hover:text-red-400"
                     >
                       −
                     </button>
-                    <span className="px-3 font-semibold text-gray-800 text-lg">
+                    <span className="px-3 font-semibold text-white text-lg">
                       {item.quantity}
                     </span>
                     <button
                       onClick={() => handleCartQuantityChange(item, 1)}
-                      className="px-3 text-xl text-gray-800 hover:text-red-600"
+                      className="px-3 text-xl text-white hover:text-red-400"
                     >
                       +
                     </button>
@@ -77,7 +78,9 @@ const OrderModal = ({
 
         {cart.length > 0 && (
           <div className="mt-6 flex justify-between items-center">
-            <strong className="text-2xl text-gray-800">Razem: {getTotal()} zł</strong>
+            <strong className="text-2xl text-white">
+              Razem: {getTotal()} zł
+            </strong>
             <button
               onClick={startPayment}
               className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-bold text-lg"
@@ -92,4 +95,3 @@ const OrderModal = ({
 };
 
 export default OrderModal;
-
