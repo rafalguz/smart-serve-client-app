@@ -44,6 +44,7 @@ const MenuHeader = ({
                     <button
                       onClick={() => {
                         setActiveMain(main);
+                        setCategory(subs[0]); // 👈 automatycznie ustawia pierwszą podkategorię
                         setMobileView("sub");
                       }}
                       className="w-full text-left font-bold text-lg py-3 px-4 rounded-xl bg-[#2a2a2a] hover:bg-red-600 hover:text-white transition shadow-md"
