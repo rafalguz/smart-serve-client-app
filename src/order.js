@@ -1,5 +1,4 @@
-
-import { useState } from 'react';
+import { useState } from "react";
 
 export function useCart() {
   const [cart, setCart] = useState([]);
@@ -24,14 +23,14 @@ export function useCart() {
   const removeFromCart = (id) => {
     setCart((prev) => prev.filter((item) => item.id !== id));
   };
-  
 
   const getTotal = () => {
     return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   };
 
   const handlePlaceOrder = () => {
-    setOrderSuccess(true);
+    setOrderSuccess(false);
+    setPaymentOpen(true);
     setCart([]);
     setTimeout(() => setOrderSuccess(false), 3000);
     setOrderOpen(false);
@@ -41,14 +40,11 @@ export function useCart() {
     setCart((prev) =>
       prev
         .map((item) =>
-          item.id === id
-            ? { ...item, quantity: item.quantity - 1 }
-            : item
+          item.id === id ? { ...item, quantity: item.quantity - 1 } : item
         )
         .filter((item) => item.quantity > 0)
     );
   };
-  
 
   return {
     cart,
@@ -58,6 +54,6 @@ export function useCart() {
     removeFromCart,
     decreaseQuantity,
     getTotal,
-    handlePlaceOrder
+    handlePlaceOrder,
   };
 }

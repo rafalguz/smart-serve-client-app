@@ -5,6 +5,7 @@ import MenuHeader from "./components/MenuHeader";
 import MenuGrid from "./components/MenuGrid";
 import OrderModal from "./components/OrderModal";
 import ItemModal from "./components/ItemModal";
+import PaymentModal from "./components/PaymentModal";
 
 const App = () => {
   const [orderOpen, setOrderOpen] = useState(false);
@@ -17,6 +18,8 @@ const App = () => {
   const [activeMain, setActiveMain] = useState(null);
   const [quantities, setQuantities] = useState({});
   const [addedItemId, setAddedItemId] = useState(null);
+  const [scrolledDown, setScrolledDown] = useState(false);
+  const [paymentOpen, setPaymentOpen] = useState(false);
 
   const {
     cart,
@@ -34,6 +37,22 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    const handleScroll = () => {
+      setScrolledDown(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolledDown(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 640) {
         setMenuOpen(false);
@@ -47,6 +66,16 @@ const App = () => {
   const handleChooseTable = (num) => {
     setTable(num);
     localStorage.setItem("table", num);
+  };
+  const handlePaymentMethod = (method) => {
+    setPaymentOpen(false);
+    setOrderSuccess(true); // Później tu możesz dodać logikę terminala/BLIKa
+    alert(`Wybrano metodę: ${method}`);
+  };
+
+  const startPayment = () => {
+    setOrderOpen(false);
+    setPaymentOpen(true);
   };
 
   const updateQuantity = (id, change) => {
@@ -128,8 +157,14 @@ const App = () => {
           removeFromCart={removeFromCart}
           handleCartQuantityChange={handleCartQuantityChange}
           getTotal={getTotal}
-          handlePlaceOrder={handlePlaceOrder}
+          startPayment={startPayment}
         />
+         {paymentOpen && (
+         <PaymentModal
+         onClose={() => setPaymentOpen(false)}
+         onSelect={handlePaymentMethod}
+  />
+)}
 
         <ItemModal
           selected={selected}
@@ -142,18 +177,41 @@ const App = () => {
         />
 
         {cart.length > 0 && !orderOpen && (
-          <div className="fixed top-4 right-3 z-50">
+          <div className="fixed top-4 right-1 z-50 flex gap-3 items-center">
+            {/* Kelner */}
+            <button
+              onClick={() => alert("Kelner został wezwany!")}
+              className={`absolute top-0 right-0 bg-white text-gray-800 p-3 rounded-full shadow-md hover:shadow-lg transition-transform duration-300 ${
+                scrolledDown ? "translate-y-20" : "translate-x-[-64px]"
+              }`}
+              title="Wezwij kelnera"
+            >
+              <img
+                src="/images/wezwijkelnera.jpg"
+                alt="Wezwij kelnera"
+                className="w-8 h-8 object-contain"
+              />
+            </button>
+
+            {/* Koszyk */}
             <button
               onClick={() => setOrderOpen(true)}
-              className={`bg-white text-gray-800 font-semibold p-3 rounded-full shadow-md hover:shadow-lg transition relative ${
+              className={`bg-white text-gray-800 p-3 rounded-full shadow-md hover:shadow-lg transition relative ${
                 addedItemId ? "animate-bounce" : ""
               }`}
               title="Twoje zamówienie"
             >
-              🛒
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                {cart.reduce((acc, item) => acc + item.quantity, 0)}
-              </span>
+              <img
+                src="/images/koszyk.webp"
+                alt="Koszyk"
+                className="w-8 h-8 object-contain"
+              />
+              {cart.length > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                  {cart.reduce((acc, item) => acc + item.quantity, 0)}
+                </span>
+              )}
+              
             </button>
           </div>
         )}
