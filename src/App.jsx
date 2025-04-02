@@ -270,6 +270,7 @@ const App = () => {
                         for (let i = 0; i < qty; i++) {
                           addToCart(item);
                         }
+                        setQuantities((prev) => ({ ...prev, [item.id]: 1 }));
                         setAddedItemId(item.id);
                         setTimeout(() => setAddedItemId(null), 1000);
                       }}
@@ -403,6 +404,7 @@ const App = () => {
                     for (let i = 0; i < qty; i++) {
                       addToCart(selected);
                     }
+                    setQuantities((prev) => ({ ...prev, [selected.id]: 1 }));
                     setAddedItemId(selected.id);
                     setTimeout(() => setAddedItemId(null), 1000);
                     setSelected(null);
