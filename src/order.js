@@ -28,14 +28,6 @@ export function useCart() {
     return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   };
 
-  const handlePlaceOrder = () => {
-    setOrderSuccess(false);
-    setPaymentOpen(true);
-    setCart([]);
-    setTimeout(() => setOrderSuccess(false), 3000);
-    setOrderOpen(false);
-  };
-
   const decreaseQuantity = (id) => {
     setCart((prev) =>
       prev
@@ -53,7 +45,6 @@ export function useCart() {
     addToCart,
     removeFromCart,
     decreaseQuantity,
-    getTotal,
-    handlePlaceOrder,
+    getTotal
   };
 }

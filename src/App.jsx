@@ -45,14 +45,6 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolledDown(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 640) {
         setMenuOpen(false);
