@@ -1,3 +1,6 @@
+
+import { useTranslate } from "../context/LanguageContext";
+
 const OrderModal = ({
   orderOpen,
   setOrderOpen,
@@ -7,6 +10,7 @@ const OrderModal = ({
   getTotal,
   startPayment,
 }) => {
+  const { t } = useTranslate();
   if (!orderOpen) return null;
 
   return (

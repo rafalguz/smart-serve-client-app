@@ -1,3 +1,5 @@
+import { useTranslate } from "../context/LanguageContext";
+
 const ItemModal = ({
     selected,
     setSelected,
@@ -7,6 +9,7 @@ const ItemModal = ({
     setQuantities,
     setAddedItemId,
   }) => {
+    const { t } = useTranslate();
     if (!selected) return null;
   
     const handleAdd = () => {

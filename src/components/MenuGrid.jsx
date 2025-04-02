@@ -1,3 +1,5 @@
+import { useTranslate } from "../context/LanguageContext";
+
 const MenuGrid = ({
     filteredMenu,
     quantities,
@@ -8,6 +10,7 @@ const MenuGrid = ({
     addedItemId,
     setSelected,
   }) => {
+    const { t } = useTranslate();
     return (
       <div className="w-full">
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">

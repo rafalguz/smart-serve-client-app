@@ -6,6 +6,7 @@ import MenuGrid from "./components/MenuGrid";
 import OrderModal from "./components/OrderModal";
 import ItemModal from "./components/ItemModal";
 import PaymentModal from "./components/PaymentModal";
+import LanguageSwitcher from "./components/LanguageSwitcher";
 
 const App = () => {
   const [orderOpen, setOrderOpen] = useState(false);
@@ -118,6 +119,10 @@ const App = () => {
           </div>
         )}
 
+        <div className="fixed top-4 left-4 z-50">
+          <LanguageSwitcher />
+        </div>
+
         <MenuHeader
           category={category}
           setCategory={setCategory}
@@ -151,12 +156,12 @@ const App = () => {
           getTotal={getTotal}
           startPayment={startPayment}
         />
-         {paymentOpen && (
-         <PaymentModal
-         onClose={() => setPaymentOpen(false)}
-         onSelect={handlePaymentMethod}
-  />
-)}
+        {paymentOpen && (
+          <PaymentModal
+            onClose={() => setPaymentOpen(false)}
+            onSelect={handlePaymentMethod}
+          />
+        )}
 
         <ItemModal
           selected={selected}
@@ -203,7 +208,6 @@ const App = () => {
                   {cart.reduce((acc, item) => acc + item.quantity, 0)}
                 </span>
               )}
-              
             </button>
           </div>
         )}

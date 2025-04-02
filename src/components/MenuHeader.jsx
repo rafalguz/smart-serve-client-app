@@ -1,4 +1,5 @@
 import { menuCategories } from "../menu";
+import { useTranslate } from "../context/LanguageContext";
 
 const MenuHeader = ({
   category,
@@ -12,6 +13,7 @@ const MenuHeader = ({
   activeMain,
   setActiveMain,
 }) => {
+  const { t } = useTranslate();
   return (
     <header className="text-center mb-6 w-full mx-auto">
       <img
@@ -20,7 +22,7 @@ const MenuHeader = ({
         className="mx-auto mb-2 w-48 md:w-56 lg:w-64 h-auto"
       />
       <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-red-600 tracking-tight mb-2">
-        Menu
+      {t("menu")}
       </h1>
 
       <div className="w-full max-w-5xl mx-auto">
@@ -33,7 +35,7 @@ const MenuHeader = ({
             }}
             className="sm:hidden bg-red-600 text-white px-4 py-2 rounded-full font-semibold shadow-md mb-4"
           >
-            🍣 Kategorie
+            🍣 {t("categories")}
           </button>
 
           {menuOpen && (
@@ -63,7 +65,7 @@ const MenuHeader = ({
                     }}
                     className="text-sm text-gray-400 mb-3 hover:text-red-400 transition"
                   >
-                    ← Wróć
+                    ← {t("back")}
                   </button>
                   {menuCategories[activeMain].map((sub) => (
                     <button
