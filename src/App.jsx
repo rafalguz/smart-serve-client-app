@@ -13,15 +13,17 @@ const App = () => {
   const [mobileView, setMobileView] = useState("main"); // "main" | "sub"
   const [activeMain, setActiveMain] = useState(null);
   const [quantities, setQuantities] = useState({});
+  const [addedItemId, setAddedItemId] = useState(null);
+
 
   const {
     cart,
-    addedItemId,
     orderSuccess,
     addToCart,
     removeFromCart,
     getTotal,
     handlePlaceOrder,
+    decreaseQuantity,
   } = useCart();
 
   useEffect(() => {
@@ -53,7 +55,15 @@ const App = () => {
       return { ...prev, [id]: newQty };
     });
   };
-
+  const handleCartQuantityChange = (item, change) => {
+    if (change === 1) {
+      addToCart(item);
+    } else if (change === -1) {
+      decreaseQuantity(item.id);
+    }
+  };
+  
+  
   const filteredMenu = MENU.filter((item) => item.category === category);
 
   if (!table) {
@@ -322,13 +332,47 @@ const App = () => {
                 {cart.length === 0 ? (
                   <p className="text-gray-400 italic">Brak pozycji</p>
                 ) : (
-                  <ul className="space-y-2 mb-4">
+                  <ul className="space-y-3 mb-4">
                     {cart.map((item, i) => (
-                      <li key={i} className="flex justify-between text-sm">
-                        <span>
-                          {item.name} × {item.quantity}
-                        </span>
-                        <span>{item.price * item.quantity} zł</span>
+                      <li
+                        key={i}
+                        className="flex justify-between items-center bg-gray-100 rounded-xl p-3"
+                      >
+                        <div>
+                          <p className="font-semibold text-gray-800">
+                            {item.name}
+                          </p>
+                          <p className="text-sm text-gray-600">
+                            {item.price} zł / szt. × {item.quantity} ={" "}
+                            {item.price * item.quantity} zł
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => removeFromCart(item.id)}
+                            className="text-red-500 hover:text-red-700 text-lg font-bold px-2"
+                            title="Usuń pozycję"
+                          >
+                            🗑
+                          </button>
+                          <div className="flex items-center border border-gray-400 rounded-xl">
+                            <button
+                              onClick={() => handleCartQuantityChange(item, -1)}
+                              className="px-2 text-gray-800 hover:text-red-600 text-xl"
+                            >
+                              −
+                            </button>
+                            <span className="px-2 font-semibold text-gray-800">
+                              {item.quantity}
+                            </span>
+                            <button
+                              onClick={() => handleCartQuantityChange(item, 1)}
+                              className="px-2 text-gray-800 hover:text-red-600 text-xl"
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
                       </li>
                     ))}
                   </ul>

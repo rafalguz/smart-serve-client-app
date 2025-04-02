@@ -21,18 +21,10 @@ export function useCart() {
     setTimeout(() => setAddedItemId(null), 800);
   };
 
-  const removeFromCart = (index) => {
-    setCart((prev) => {
-      const item = prev[index];
-      if (item.quantity > 1) {
-        return prev.map((i, idx) =>
-          idx === index ? { ...i, quantity: i.quantity - 1 } : i
-        );
-      } else {
-        return prev.filter((_, i) => i !== index);
-      }
-    });
+  const removeFromCart = (id) => {
+    setCart((prev) => prev.filter((item) => item.id !== id));
   };
+  
 
   const getTotal = () => {
     return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -45,12 +37,26 @@ export function useCart() {
     setOrderOpen(false);
   };
 
+  const decreaseQuantity = (id) => {
+    setCart((prev) =>
+      prev
+        .map((item) =>
+          item.id === id
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        )
+        .filter((item) => item.quantity > 0)
+    );
+  };
+  
+
   return {
     cart,
     addedItemId,
     orderSuccess,
     addToCart,
     removeFromCart,
+    decreaseQuantity,
     getTotal,
     handlePlaceOrder
   };
