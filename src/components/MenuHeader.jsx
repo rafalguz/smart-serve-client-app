@@ -46,19 +46,14 @@ const MenuHeader = ({
                   <div key={main}>
                     <button
                       onClick={() => {
-                        const isClosing = openedMainCategory === main;
-                        if (isClosing) {
-                          setOpenedMainCategory(null);
+                        const subs = menuCategories[main];
+                        if (Array.isArray(subs)) {
+                          setOpenedMainCategory(main);
+                          setMobileView("sub");
+                          setActiveMain(main);
                         } else {
-                          const subs = menuCategories[main];
-                          if (Array.isArray(subs)) {
-                            handleSelectCategory(main, subs[0]);
-                            setOpenedMainCategory(main); // ← TO BYŁO POMINIĘTE!
-                            setMobileView("sub");
-                            setActiveMain(main);
-                          } else {
-                            handleSelectCategory(main);
-                          }
+                          handleSelectCategory(main);
+                          setMenuOpen(false);
                         }
                       }}
                       className="w-full text-left font-bold text-lg py-3 px-4 rounded-xl bg-[#2a2a2a] hover:bg-red-600 hover:text-white transition shadow-md"
@@ -86,11 +81,9 @@ const MenuHeader = ({
                         handleSelectCategory(activeMain, sub);
                         setMenuOpen(false);
                       }}
-                      className={`min-w-[130px] px-5 py-2.5 text-base rounded-full font-semibold border w-full text-center ${
-                        category === sub
-                          ? "bg-red-600 text-white border-red-600"
-                          : "bg-white text-gray-800 border-gray-300"
-                      } hover:shadow transition`}
+                      className={`w-full text-left font-bold text-lg py-3 px-4 rounded-xl bg-[#2a2a2a] hover:bg-red-600 hover:text-white transition shadow-md ${
+                        category === sub ? "bg-red-600 text-white" : ""
+                      }`}
                     >
                       {sub}
                     </button>
