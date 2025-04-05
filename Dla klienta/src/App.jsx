@@ -1,3 +1,4 @@
+import { db } from "./firebase";
 import { useEffect, useState } from "react";
 import { MENU } from "./menu";
 import { useCart } from "./order";
@@ -8,7 +9,7 @@ import ItemModal from "./components/ItemModal";
 import PaymentModal from "./components/PaymentModal";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import TableChangeModal from "./components/TableChangeModal";
-import { db } from "./firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 
 const App = () => {
@@ -75,9 +76,25 @@ const App = () => {
     setTable(num);
     localStorage.setItem("table", num);
   };
-  const handlePaymentMethod = (method) => {
+  const handlePaymentMethod = async (method) => {
     setPaymentOpen(false);
-    setOrderSuccess(true); // Później tu możesz dodać logikę terminala/BLIKa
+    setOrderSuccess(true);
+
+    try {
+      await addDoc(collection(db, "orders"), {
+        table: Number(table),
+        items: cart.map((item) => ({
+          name: item.name,
+          quantity: item.quantity,
+        })),
+        status: "new",
+        createdAt: serverTimestamp(),
+      });
+      console.log("✅ Zamówienie zapisane w Firestore!");
+    } catch (error) {
+      console.error("❌ Błąd zapisu zamówienia:", error);
+    }
+
     alert(`Wybrano metodę: ${method}`);
   };
 
@@ -112,7 +129,7 @@ const App = () => {
     }
     setMenuOpen(false);
   };
-  
+
   const filteredMenu = MENU.filter((item) => item.category === category);
 
   if (!table) {
@@ -157,7 +174,7 @@ const App = () => {
         />
 
         <MenuGrid
-          key={category} 
+          key={category}
           filteredMenu={filteredMenu}
           quantities={quantities}
           updateQuantity={updateQuantity}
