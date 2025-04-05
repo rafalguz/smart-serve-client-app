@@ -8,6 +8,8 @@ import ItemModal from "./components/ItemModal";
 import PaymentModal from "./components/PaymentModal";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import TableChangeModal from "./components/TableChangeModal";
+import { db } from "./firebase";
+
 
 const App = () => {
   const [orderOpen, setOrderOpen] = useState(false);
