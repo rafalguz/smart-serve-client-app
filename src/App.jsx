@@ -35,6 +35,7 @@ const App = () => {
     getTotal,
     handlePlaceOrder,
     decreaseQuantity,
+    clearCart
   } = useCart();
 
   useEffect(() => {
