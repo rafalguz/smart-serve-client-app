@@ -47,5 +47,6 @@ export function useCart() {
     removeFromCart,
     decreaseQuantity,
     getTotal,
+    clearCart,
   };
 }

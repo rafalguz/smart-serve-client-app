@@ -11,7 +11,6 @@ import LanguageSwitcher from "./components/LanguageSwitcher";
 import TableChangeModal from "./components/TableChangeModal";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
-
 const App = () => {
   const [orderOpen, setOrderOpen] = useState(false);
   const [table, setTable] = useState(null);
@@ -90,6 +89,9 @@ const App = () => {
         status: "new",
         createdAt: serverTimestamp(),
       });
+
+      clearCart(); // 🧹 czyścimy koszyk
+
       console.log("✅ Zamówienie zapisane w Firestore!");
     } catch (error) {
       console.error("❌ Błąd zapisu zamówienia:", error);
