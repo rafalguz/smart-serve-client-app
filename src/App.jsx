@@ -11,7 +11,7 @@ import LanguageSwitcher from "./components/LanguageSwitcher";
 import TableChangeModal from "./components/TableChangeModal";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import NewsletterModal from "./components/NewsletterModal";
-
+import RatingModal from "./components/RatingModal";
 
 const App = () => {
   const [orderOpen, setOrderOpen] = useState(false);
@@ -28,6 +28,7 @@ const App = () => {
   const [scrolledDown, setScrolledDown] = useState(false);
   const [paymentOpen, setPaymentOpen] = useState(false);
   const [showNewsletterModal, setShowNewsletterModal] = useState(false);
+  const [showRatingModal, setShowRatingModal] = useState(false);
 
   const {
     cart,
@@ -82,7 +83,7 @@ const App = () => {
   const handlePaymentMethod = async (method) => {
     setPaymentOpen(false);
     setOrderSuccess(true);
-    setShowNewsletterModal(true);
+    setShowRatingModal(true); // najpierw ocena
 
     try {
       await addDoc(collection(db, "orders"), {
@@ -95,8 +96,7 @@ const App = () => {
         createdAt: serverTimestamp(),
       });
 
-      clearCart(); // 🧹 czyścimy koszyk
-
+      clearCart();
       console.log("✅ Zamówienie zapisane w Firestore!");
     } catch (error) {
       console.error("❌ Błąd zapisu zamówienia:", error);
@@ -300,6 +300,23 @@ const App = () => {
               console.log("📧 Zapisano do newslettera:", email);
               setShowNewsletterModal(false);
               alert("Dziękujemy za zapis!");
+            }}
+          />
+        )}
+        {showRatingModal && (
+          <RatingModal
+            onSubmit={async (rating) => {
+              try {
+                await addDoc(collection(db, "ratings"), {
+                  table: Number(table),
+                  rating,
+                  createdAt: serverTimestamp(),
+                });
+                setShowRatingModal(false);
+                setShowNewsletterModal(true); // dopiero potem newsletter
+              } catch (err) {
+                console.error("Błąd zapisu oceny:", err);
+              }
             }}
           />
         )}
