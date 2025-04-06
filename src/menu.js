@@ -295,7 +295,7 @@ export const MENU = [
     description: "boczek chashu, menma, jajko ajitsuke, nori, dymka, tłuszcz z gęsi",
     price: 49,
     category: "Zupy",
-    image: "/images/zupy/szajnochy11Ramen2.webp",
+    image: "/images/Zupy/szajnochy11Ramen2.webp",
   },
   {
     id: "zupa_spicy_shoyu",
@@ -303,7 +303,7 @@ export const MENU = [
     description: "mięso mielone soboro, menma, pak choy, jajko ajitsuke, nori, dymka, olej chilli",
     price: 49,
     category: "Zupy",
-    image: "/images/zupy/szajnochy11Ramen3.webp",
+    image: "/images/Zupy/szajnochy11Ramen3.webp",
   },
   {
     id: "zupa_kamo_paitan",
@@ -311,7 +311,7 @@ export const MENU = [
     description: "marynowana karkówka, blanszowany szpinak, czerwona cebula, jajko ajitsuke, czips z pietruszki, dymka",
     price: 52,
     category: "Zupy",
-    image: "/images/zupy/szajnochy11Ramen6.webp",
+    image: "/images/Zupy/szajnochy11Ramen6.webp",
   },
   {
     id: "zupa_kamo_tantanmen",
@@ -319,7 +319,7 @@ export const MENU = [
     description: "mięso mielone soboro, piklowana biała cebula, pak choy, olej chilli, jajko ajitsuke, sezam",
     price: 52,
     category: "Zupy",
-    image: "/images/zupy/szajnochy11Ramen10.webp",
+    image: "/images/Zupy/szajnochy11Ramen10.webp",
   },
   {
     id: "zupa_wege_tantanmen",
@@ -327,7 +327,7 @@ export const MENU = [
     description: "wegańskie mięso soboro, piklowana biała cebula, pak choy, kiełki fasoli mung, olej chilli",
     price: 48,
     category: "Zupy",
-    image: "/images/zupy/szajnochy11Ramen11.webp",
+    image: "/images/Zupy/szajnochy11Ramen11.webp",
   },
   {
     id: "zupa_shrimp_paitan",
@@ -335,7 +335,7 @@ export const MENU = [
     description: "Krewetki smażone w wędzonym panko, narutomaki, dymka, chipsy z cebuli, nori, jajko ajitsuke, olej krewetkowy",
     price: 52,
     category: "Zupy",
-    image: "/images/zupy/ShrimpPaitan.png",
+    image: "/images/Zupy/ShrimpPaitan.png",
   },
   {
     id: "zupa_kakuni_chintan",
@@ -343,7 +343,7 @@ export const MENU = [
     description: "Boczek kakuni BBQ, jajko ajitsuke, piklowana czerowna cebula, rukola, grillowany bambus, nori, dymka, olej krewetkowy",
     price: 49,
     category: "Zupy",
-    image: "/images/zupy/glazded.png",
+    image: "/images/Zupy/glazded.png",
   },
   {
     id: "zupa_krewetkowa",
@@ -351,7 +351,7 @@ export const MENU = [
     price: 30,
     description: "krewetki, warzywa, oliwa kolendrowa",
     category: "Zupy",
-    image: "/images/zupy/shrimpSoup.jpg",
+    image: "/images/Zupy/shrimpSoup.jpg",
   },
   {
     id: "zupa_miso_losos",
@@ -359,7 +359,7 @@ export const MENU = [
     price: 23,
     description: "",
     category: "Zupy",
-    image: "/images/zupy/zupaZLososiem.png",
+    image: "/images/Zupy/zupaZLososiem.png",
   },
   {
     id: "zupa_miso_tofu",
@@ -367,7 +367,7 @@ export const MENU = [
     price: 18,
     description: "",
     category: "Zupy",
-    image: "/images/zupy/tofu.jpg",
+    image: "/images/Zupy/tofu.jpg",
   },
 ];
 
