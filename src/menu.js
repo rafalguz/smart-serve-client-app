@@ -936,7 +936,7 @@ export const menuCategories = {
   Zestawy: [],
   "Specjały Szajnochy": [],
   Napoje: [
-    "Napoje Zimne",
+    "Napoje zimne",
     "Herbata",
     "Kawa",
     "Lemoniada",

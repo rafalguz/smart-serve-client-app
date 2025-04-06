@@ -110,11 +110,12 @@ const MenuHeader = ({
                     }
                   }
                 }}
-                className={`min-w-[130px] px-5 py-2.5 text-base rounded-full font-semibold border transition ${
+                className={`min-w-[130px] px-5 py-2.5 text-base rounded-full font-semibold border transition-transform duration-150 ease-in-out hover:-translate-y-0.5 active:scale-95 ${
                   category === mainCat || menuCategories[mainCat]?.includes(category)
                     ? "bg-red-600 text-white border-red-600"
-                    : "bg-white text-black border-red-600 hover:bg-red-600 hover:text-white"
+                    : "bg-white text-black border border-gray-600 hover:bg-red-600 hover:text-white"
                 }`}
+                
                 
               >
                 {mainCat}
@@ -132,11 +133,11 @@ const MenuHeader = ({
                   onClick={() =>
                     handleSelectCategory(openedMainCategory, subCat)
                   }
-                  className={`min-w-[130px] px-5 py-2.5 text-base rounded-full transition ${
+                  className={`min-w-[130px] px-5 py-2.5 text-base rounded-full transition-transform duration-150 ease-in-out hover:-translate-y-0.5 active:scale-95 ${
                     category === subCat
                       ? "bg-red-500 text-white"
                       : "bg-gray-800 text-white hover:bg-red-600"
-                  }`}
+                  }`}                  
                   
                 >
                   {subCat}
