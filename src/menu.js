@@ -122,7 +122,7 @@ export const MENU = [
     image: "https://placehold.co/300x200?text=Tuńczyk+Sashimi",
   },
   {
-    id: "wege_tofu",
+    id: "wege_tofu_sashini",
     name: "Smoking Tofu Sashimi Roll 6szt.",
     price: 39,
     description:
@@ -131,7 +131,7 @@ export const MENU = [
     image: "/images/wege/tofu.webp",
   },
   {
-    id: "wege_tofu",
+    id: "wege_tofu_filadelfia",
     name: "Smoking Filadelfia 6szt.",
     price: 32,
     description: "Marchewka sous vide, serek, ogórek, awokado, kanpyo",
