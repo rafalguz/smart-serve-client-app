@@ -38,6 +38,10 @@ export function useCart() {
     );
   };
 
+const clearCart = () => {
+  setCart([]);
+};
+
   return {
     cart,
     addedItemId,
