@@ -128,7 +128,7 @@ export const MENU = [
     description:
       "Wędzone tofu, marchewka smażona w sosie śliwkowym, szczypiorek, awokado, chutney z czerownej cebuli, masago arare",
     category: "Sushi Wege",
-    image: "images/wege/tofu.webp",
+    image: "/images/wege/tofu.webp",
   },
   {
     id: "wege_tofu",
@@ -136,7 +136,7 @@ export const MENU = [
     price: 32,
     description: "Marchewka sous vide, serek, ogórek, awokado, kanpyo",
     category: "Sushi Wege",
-    image: "images/wege/vege-filadelfia.webp",
+    image: "/images/wege/vege-filadelfia.webp",
   },
   {
     id: "wege_autumn",
@@ -145,7 +145,7 @@ export const MENU = [
     description:
       "Boczniak w tempurze, pesto z edamame, marynowana dynia, grzyby shimeji, ogórek sous vide, serek, ogórek, awokado, kanpyo",
     category: "Sushi Wege",
-    image: "images/wege/wege-autumn.png",
+    image: "/images/wege/wege-autumn.png",
   },
   {
     id: "specjal_jakub",
@@ -204,7 +204,7 @@ export const MENU = [
     price: 8,
     description: "Tradycyjna forma sushi, warzywa na ryżu",
     category: "Nigiri",
-    image: "images/Nigiri/nigiri-awokado.webp",
+    image: "/images/Nigiri/nigiri-awokado.webp",
   },
   {
     id: "nigiri_losos",
@@ -212,7 +212,7 @@ export const MENU = [
     price: 15,
     description: "Tradycyjna forma sushi, łosoś na ryżu",
     category: "Nigiri",
-    image: "images/Nigiri/nigiri-losos.webp",
+    image: "/images/Nigiri/nigiri-losos.webp",
   },
   {
     id: "nigiri_krewetka 1szt.",
@@ -220,7 +220,7 @@ export const MENU = [
     price: 15,
     description: "Tradycyjna forma sushi, krewetka na ryżu",
     category: "Nigiri",
-    image: "images/Nigiri/nigiri-krewetka.webp",
+    image: "/images/Nigiri/nigiri-krewetka.webp",
   },
   {
     id: "nigiri_tuńczyk 1szt.",
@@ -228,7 +228,7 @@ export const MENU = [
     price: 17,
     description: "Tradycyjna forma sushi, tuńczyk na ryżu",
     category: "Nigiri",
-    image: "images/Nigiri/nigiri-tuna.webp",
+    image: "/images/Nigiri/nigiri-tuna.webp",
   },
   {
     id: "nigiri_wegorz 1szt.",
@@ -236,7 +236,7 @@ export const MENU = [
     price: 17,
     description: "Tradycyjna forma sushi, węgorz na ryżu",
     category: "Nigiri",
-    image: "images/Nigiri/nigiri-wegorz.webp",
+    image: "/images/Nigiri/nigiri-wegorz.webp",
   },
   {
     id: "nigiri_malze sw.jakuba 1szt.",
@@ -244,7 +244,7 @@ export const MENU = [
     price: 17,
     description: "Tradycyjna forma sushi, małże",
     category: "Nigiri",
-    image: "images/Nigiri/nigiri-malze.webp",
+    image: "/images/Nigiri/nigiri-malze.webp",
   },
   {
     id: "nigiri_osmiornica 1szt.",
@@ -252,7 +252,7 @@ export const MENU = [
     price: 17,
     description: "Tradycyjna forma sushi, ośmiornica na ryżu",
     category: "Nigiri",
-    image: "images/Nigiri/nigiri-osmiornica.webp",
+    image: "/images/Nigiri/nigiri-osmiornica.webp",
   },
   {
     id: "nigiri_poledwoca_wolowa 1szt.",
@@ -260,7 +260,7 @@ export const MENU = [
     price: 17,
     description: "Tradycyjna forma sushi, polędwica na ryżu",
     category: "Nigiri",
-    image: "images/Nigiri/nigiri-wolowina.webp",
+    image: "/images/Nigiri/nigiri-wolowina.webp",
   },
   {
     id: "sashimi_Gravlax.",
@@ -269,7 +269,7 @@ export const MENU = [
     description:
       "Gravlax, pesto z edamame, ogórek, awokado, marynowana dynia, rukola, ikura",
     category: "Sashimi",
-    image: "images/Sashimi/sashimi-losos.webp",
+    image: "/images/Sashimi/sashimi-losos.webp",
   },
   {
     id: "sashimi_tunczyk.",
@@ -278,7 +278,7 @@ export const MENU = [
     description:
       "Tuńczyk, majonez grzybowy, boczniak mikołajkowy w tempurze, pak choi, ogórek, szczypiorek, kizami wasabi ",
     category: "Sashimi",
-    image: "images/Sashimi/sashimi-tunczyk.webp",
+    image: "/images/Sashimi/sashimi-tunczyk.webp",
   },
   {
     id: "sashimi_wolowina.",
@@ -287,7 +287,7 @@ export const MENU = [
     description:
       "polędwica wołowa tataki, krewetka w panko, sos kobe, szczypiorek, rukola, piklowana czerwona cebula, ikura ",
     category: "Sashimi",
-    image: "images/Sashimi/sashimi-wolowina.webp",
+    image: "/images/Sashimi/sashimi-wolowina.webp",
   },
   {
     id: "zupa_shoyu",
