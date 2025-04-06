@@ -10,6 +10,8 @@ import PaymentModal from "./components/PaymentModal";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import TableChangeModal from "./components/TableChangeModal";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import NewsletterModal from "./components/NewsletterModal";
+
 
 const App = () => {
   const [orderOpen, setOrderOpen] = useState(false);
@@ -25,6 +27,7 @@ const App = () => {
   const [addedItemId, setAddedItemId] = useState(null);
   const [scrolledDown, setScrolledDown] = useState(false);
   const [paymentOpen, setPaymentOpen] = useState(false);
+  const [showNewsletterModal, setShowNewsletterModal] = useState(false);
 
   const {
     cart,
@@ -35,7 +38,7 @@ const App = () => {
     getTotal,
     handlePlaceOrder,
     decreaseQuantity,
-    clearCart
+    clearCart,
   } = useCart();
 
   useEffect(() => {
@@ -79,6 +82,7 @@ const App = () => {
   const handlePaymentMethod = async (method) => {
     setPaymentOpen(false);
     setOrderSuccess(true);
+    setShowNewsletterModal(true);
 
     try {
       await addDoc(collection(db, "orders"), {
@@ -287,6 +291,17 @@ const App = () => {
               </div>
             )}
           </div>
+        )}
+        {showNewsletterModal && (
+          <NewsletterModal
+            onClose={() => setShowNewsletterModal(false)}
+            onSubmit={(email) => {
+              // TODO: zapisz email do Firestore lub wyślij do API
+              console.log("📧 Zapisano do newslettera:", email);
+              setShowNewsletterModal(false);
+              alert("Dziękujemy za zapis!");
+            }}
+          />
         )}
       </div>
     </div>
