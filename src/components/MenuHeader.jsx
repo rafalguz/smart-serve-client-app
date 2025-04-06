@@ -110,9 +110,9 @@ const MenuHeader = ({
                     }
                   }
                 }}
-                className={`min-w-[130px] px-5 py-2.5 text-base rounded-full font-semibold border transition-transform duration-150 ease-in-out hover:-translate-y-0.5 active:scale-95 ${
+                className={`min-w-[130px] px-5 py-2.5 text-lg rounded-full font-semibold border transition-transform duration-150 ease-in-out hover:-translate-y-0.5 active:scale-95 ${
                   category === mainCat || menuCategories[mainCat]?.includes(category)
-                    ? "bg-red-600 text-white border-red-600"
+                    ? "bg-gradient-to-r from-red-600 to-red-700 text-white border-red-600"
                     : "bg-white text-black border border-gray-600 hover:bg-red-600 hover:text-white"
                 }`}
                 
@@ -133,10 +133,10 @@ const MenuHeader = ({
                   onClick={() =>
                     handleSelectCategory(openedMainCategory, subCat)
                   }
-                  className={`min-w-[130px] px-5 py-2.5 text-base rounded-full transition-transform duration-150 ease-in-out hover:-translate-y-0.5 active:scale-95 ${
+                  className={`min-w-[130px] px-5 py-2.5 text-base rounded-full font- font-medium transition-transform duration-150 ease-in-out hover:-translate-y-0.5 active:scale-95 ${
                     category === subCat
-                      ? "bg-red-500 text-white"
-                      : "bg-gray-800 text-white hover:bg-red-600"
+                      ? " bg-red-500 text-white"
+                      : "bg-gray-800 text-white hover:bg-red-500"
                   }`}                  
                   
                 >
