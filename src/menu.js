@@ -369,6 +369,54 @@ export const MENU = [
     category: "Zupy",
     image: "/images/Zupy/tofu.jpg",
   },
+  {
+    id: "coca_cola_zero_085",
+    name: "Coca Cola Zero 0,85l",
+    price: 16,
+    description: "",
+    category: "Zimne",
+    image: "/images/Napoje/cocacolazero.png",
+  },
+  {
+    id: "coca_cola_zero_05",
+    name: "Coca Cola Zero 0,5l",
+    price: 13,
+    description: "",
+    category: "Zimne",
+    image: "/images/Napoje/cocacolazero05.png",
+  },
+  {
+    id: "coca_cola_085",
+    name: "Coca Cola 0,85l",
+    price: 16,
+    description: "",
+    category: "Zimne",
+    image: "/images/Napoje/cocacolazero.png",
+  },
+  {
+    id: "coca_cola_05",
+    name: "Coca Cola 0,5l",
+    price: 13,
+    description: "",
+    category: "Zimne",
+    image: "/images/Napoje/cocacolazero05.png",
+  },
+  {
+    id: "woda_gazowana_033",
+    name: "Woda gazowana 0,33l",
+    price: 12,
+    description: "",
+    category: "Zimne",
+    image: "/images/Napoje/wodagazowana033.png",
+  },
+  {
+    id: "woda_niegazowana_033",
+    name: "Woda niegazowana 0,33l",
+    price: 12,
+    description: "",
+    category: "Zimne",
+    image: "/images/Napoje/wodaniegazowana033.png",
+  },
 ];
 
 export const menuCategories = {
@@ -376,5 +424,5 @@ export const menuCategories = {
   Zupy: [],
   Zestawy: [],
   "Specjały Szajnochy": [],
-  Napoje: [],
+  Napoje: ["Zimne","Gorące","Alkoholowe"],
 };
