@@ -110,12 +110,12 @@ const MenuHeader = ({
                     }
                   }
                 }}
-                className={`min-w-[130px] px-5 py-2.5 text-base rounded-full font-semibold border ${
-                  category === mainCat ||
-                  menuCategories[mainCat]?.includes(category)
-                    ? "bg-red-600 text-white"
-                    : "bg-white text-gray-800 border-gray-300"
-                } hover:shadow transition`}
+                className={`min-w-[130px] px-5 py-2.5 text-base rounded-full font-semibold border transition ${
+                  category === mainCat || menuCategories[mainCat]?.includes(category)
+                    ? "bg-red-600 text-white border-red-600"
+                    : "bg-white text-black border-red-600 hover:bg-red-600 hover:text-white"
+                }`}
+                
               >
                 {mainCat}
               </button>
@@ -132,11 +132,12 @@ const MenuHeader = ({
                   onClick={() =>
                     handleSelectCategory(openedMainCategory, subCat)
                   }
-                  className={`min-w-[130px] px-5 py-2.5 text-base  rounded-full transition ${
+                  className={`min-w-[130px] px-5 py-2.5 text-base rounded-full transition ${
                     category === subCat
                       ? "bg-red-500 text-white"
-                      : "bg-white text-gray-700"
+                      : "bg-gray-800 text-white hover:bg-red-600"
                   }`}
+                  
                 >
                   {subCat}
                 </button>
