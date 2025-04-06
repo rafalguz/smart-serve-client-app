@@ -335,7 +335,7 @@ export const MENU = [
     description: "Krewetki smażone w wędzonym panko, narutomaki, dymka, chipsy z cebuli, nori, jajko ajitsuke, olej krewetkowy",
     price: 52,
     category: "Zupy",
-    image: "/images/Zupy/ShrimpPaitan.png",
+    image: "/images/Zupy/shrimpPaitan.png",
   },
   {
     id: "zupa_kakuni_chintan",
